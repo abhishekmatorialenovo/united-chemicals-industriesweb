@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>United Chemical Industries | Complete Crop Care Solutions</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            green: '#2E7D32', // Deep agricultural green
+                            light: '#4CAF50', // Fresh green
+                            dark: '#1B5E20', // Darker shade for text/footers
+                            accent: '#FFC107', // Gold/Yellow for highlights
+                            blue: '#1976D2'   // Added for team section
+                        },
+                        // Added for the new Team Section design
+                        uci: {
+                            green: '#2E7D32',
+                            slate: '#1E293B', 
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'slide-left': 'slideLeft 0.8s ease-out',
+                        'slide-right': 'slideRight 0.8s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        slideLeft: {
+                            '0%': { transform: 'translateX(30px)', opacity: '0' },
+                            '100%': { transform: 'translateX(0)', opacity: '1' },
+                        },
+                        slideRight: {
+                            '0%': { transform: 'translateX(-30px)', opacity: '0' },
+                            '100%': { transform: 'translateX(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Styles */
+        .hero-slideshow {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #000;
+        }
+        
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Parallax effect */
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            z-index: 1;
+        }
+        
+        .hero-slide.active {
+            opacity: 1;
+            z-index: 2;
+        }
+        
+        /* Dark overlay for readability */
+        .hero-slide::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1));
+        }
+        
+        .slide-indicators {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 20;
+        }
+        
+        .slide-indicator {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .slide-indicator.active {
+            background-color: #4CAF50;
+            transform: scale(1.2);
+        }
+        
+        .slide-category {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(46, 125, 50, 0.9);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            z-index: 20;
+            text-transform: uppercase;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .section-header::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: #4CAF50;
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+        
+        .team-card {
+            transition: all 0.3s ease;
+        }
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-image-container {
+            overflow: hidden;
+            height: 200px;
+        }
+        .product-image {
+            transition: transform 0.5s ease;
+        }
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #4CAF50;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .dynamic-title {
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            transform: translateY(-50%);
+            max-width: 650px;
+            text-align: left;
+            opacity: 0;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            z-index: 10;
+            pointer-events: none; /* Let clicks pass through to hidden links if any */
+        }
+        
+        /* Enable pointer events for buttons inside */
+        .dynamic-title a {
+            pointer-events: auto;
+        }
+
+        .dynamic-title.active {
+            opacity: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .dynamic-title {
+                left: 5%;
+                max-width: 90%;
+                top: 45%;
+            }
+            .hero-slide {
+                background-attachment: scroll; /* Fix for mobile parallax performance */
+            }
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-700 bg-gray-50">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md fixed w-full z-50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-3">
+                    <div class="h-12 w-12 bg-brand-green text-white flex items-center justify-center rounded-lg font-bold text-xl shadow-lg">
+                        UCI
+                    </div>
+                    <div class="hidden md:block">
+                        <h1 class="text-xl font-heading font-bold text-brand-dark leading-tight">UNITED CHEMICAL<br><span class="text-brand-light text-base">INDUSTRIES</span></h1>
+                    </div>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center font-medium text-gray-600">
+                    <a href="#home" class="nav-link hover:text-brand-green transition">Home</a>
+                    <a href="#about" class="nav-link hover:text-brand-green transition">About</a>
+                    <a href="#team" class="nav-link hover:text-brand-green transition">Our Team</a>
+                    <a href="#products" class="nav-link hover:text-brand-green transition">Products</a>
+                    <a href="#contact" class="px-5 py-2 bg-brand-green text-white rounded-full hover:bg-brand-dark transition shadow-md">Contact Us</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-gray-600 focus:outline-none hover:text-brand-green transition">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu Dropdown -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4 border-t border-gray-100 bg-white">
+                <a href="#home" class="block py-3 px-4 text-gray-600 hover:bg-gray-50 hover:text-brand-green">Home</a>
+                <a href="#about" class="block py-3 px-4 text-gray-600 hover:bg-gray-50 hover:text-brand-green">About</a>
+                <a href="#team" class="block py-3 px-4 text-gray-600 hover:bg-gray-50 hover:text-brand-green">Our Team</a>
+                <a href="#products" class="block py-3 px-4 text-gray-600 hover:bg-gray-50 hover:text-brand-green">Products</a>
+                <a href="#contact" class="block py-3 px-4 text-brand-green font-semibold hover:bg-gray-50">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Slideshow -->
+    <section id="home" class="hero-slideshow flex items-center">
+        <!-- Slide 1: Pesticides (Tractor Spraying) -->
+        <div class="hero-slide active" style="background-image: url('images/3.png');">
+            <div class="slide-category">Crop Protection</div>
+        </div>
+        
+        <!-- Slide 2: Herbicides (Green Field) -->
+        <div class="hero-slide" style="background-image: url('images/4.png');">
+            <div class="slide-category">Weed Management</div>
+        </div>
+        
+        <!-- Slide 3: Fungicides (Leaf Close-up) -->
+        <div class="hero-slide" style="background-image: url('images/2.png');">
+            <div class="slide-category">Disease Control</div>
+        </div>
+        
+        <!-- Slide 4: Bio-fertilizers (Soil/Hands) -->
+        <div class="hero-slide" style="background-image: url('images/1.png');">
+            <div class="slide-category">Organic Solutions</div>
+        </div>
+        
+        <!-- Dynamic Titles for Each Slide -->
+        
+        <!-- Slide 1 Content -->
+        <div class="dynamic-title active">
+            <span class="inline-block py-1 px-3 rounded-full bg-brand-light/20 backdrop-blur-sm border border-brand-light/50 text-brand-accent font-semibold mb-6 text-sm tracking-wider uppercase">Leading the Market</span>
+            <h1 class="text-4xl md:text-6xl font-heading font-bold mb-6 leading-tight drop-shadow-lg text-white">
+                Excellence in <span class="text-brand-accent">Pesticides</span> & Crop Protection
+            </h1>
+            <p class="text-lg md:text-xl mb-10 text-gray-200 max-w-xl leading-relaxed shadow-black drop-shadow-md">
+                Advanced pest control solutions for healthier crops and higher yields.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <a href="#products" class="px-8 py-4 bg-brand-green hover:bg-brand-dark text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition transform hover:-translate-y-1 text-center">
+                    <i class="fas fa-spray-can mr-2"></i>View Pesticides
+                </a>
+                <a href="#contact" class="px-8 py-4 bg-white/10 backdrop-blur-md hover:bg-white/20 border border-white/50 text-white rounded-lg font-semibold transition text-center">
+                    <i class="fas fa-phone-alt mr-2"></i>Contact Expert
+                </a>
+            </div>
+        </div>
+        
+        <!-- Slide 2 Content -->
+        <div class="dynamic-title">
+            <span class="inline-block py-1 px-3 rounded-full bg-brand-light/20 backdrop-blur-sm border border-brand-light/50 text-brand-accent font-semibold mb-6 text-sm tracking-wider uppercase">Weed-Free Farms</span>
+            <h1 class="text-4xl md:text-6xl font-heading font-bold mb-6 leading-tight drop-shadow-lg text-white">
+                Excellence in <span class="text-brand-light">Herbicides</span> & Weed Control
+            </h1>
+            <p class="text-lg md:text-xl mb-10 text-gray-200 max-w-xl leading-relaxed shadow-black drop-shadow-md">
+                Effective weed management solutions for cleaner fields and better crop growth.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <a href="#products" class="px-8 py-4 bg-brand-green hover:bg-brand-dark text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition transform hover:-translate-y-1 text-center">
+                    <i class="fas fa-leaf mr-2"></i>View Herbicides
+                </a>
+                <a href="#contact" class="px-8 py-4 bg-white/10 backdrop-blur-md hover:bg-white/20 border border-white/50 text-white rounded-lg font-semibold transition text-center">
+                    <i class="fas fa-phone-alt mr-2"></i>Get Consultation
+                </a>
+            </div>
+        </div>
+        
+        <!-- Slide 3 Content -->
+        <div class="dynamic-title">
+            <span class="inline-block py-1 px-3 rounded-full bg-brand-light/20 backdrop-blur-sm border border-brand-light/50 text-brand-accent font-semibold mb-6 text-sm tracking-wider uppercase">Healthy Crops</span>
+            <h1 class="text-4xl md:text-6xl font-heading font-bold mb-6 leading-tight drop-shadow-lg text-white">
+                Excellence in <span class="text-brand-light">Fungicides</span> & Disease Control
+            </h1>
+            <p class="text-lg md:text-xl mb-10 text-gray-200 max-w-xl leading-relaxed shadow-black drop-shadow-md">
+                Comprehensive disease protection for vibrant, healthy crops throughout the season.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <a href="#products" class="px-8 py-4 bg-brand-green hover:bg-brand-dark text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition transform hover:-translate-y-1 text-center">
+                    <i class="fas fa-shield-alt mr-2"></i>View Fungicides
+                </a>
+                <a href="#contact" class="px-8 py-4 bg-white/10 backdrop-blur-md hover:bg-white/20 border border-white/50 text-white rounded-lg font-semibold transition text-center">
+                    <i class="fas fa-clipboard-check mr-2"></i>Get Solution
+                </a>
+            </div>
+        </div>
+        
+        <!-- Slide 4 Content -->
+        <div class="dynamic-title">
+            <span class="inline-block py-1 px-3 rounded-full bg-brand-light/20 backdrop-blur-sm border border-brand-light/50 text-brand-accent font-semibold mb-6 text-sm tracking-wider uppercase">Organic Farming</span>
+            <h1 class="text-4xl md:text-6xl font-heading font-bold mb-6 leading-tight drop-shadow-lg text-white">
+                Excellence in <span class="text-brand-light">Bio-Fertilizers</span> & Organic Solutions
+            </h1>
+            <p class="text-lg md:text-xl mb-10 text-gray-200 max-w-xl leading-relaxed shadow-black drop-shadow-md">
+                Sustainable and eco-friendly solutions for organic farming and soil health.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <a href="#products" class="px-8 py-4 bg-brand-green hover:bg-brand-dark text-white rounded-lg font-semibold shadow-lg hover:shadow-xl transition transform hover:-translate-y-1 text-center">
+                    <i class="fas fa-seedling mr-2"></i>View Bio-Fertilizers
+                </a>
+                <a href="#contact" class="px-8 py-4 bg-white/10 backdrop-blur-md hover:bg-white/20 border border-white/50 text-white rounded-lg font-semibold transition text-center">
+                    <i class="fas fa-handshake mr-2"></i>Partner with Us
+                </a>
+            </div>
+        </div>
+        
+        <!-- Slide Indicators -->
+        <div class="slide-indicators">
+            <div class="slide-indicator active" data-slide="0"></div>
+            <div class="slide-indicator" data-slide="1"></div>
+            <div class="slide-indicator" data-slide="2"></div>
+            <div class="slide-indicator" data-slide="3"></div>
+        </div>
+        
+        <!-- Scroll Down Indicator -->
+        <a href="#about" class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-pulse text-white/70 z-20 hover:text-brand-accent transition">
+            <i class="fas fa-chevron-down text-2xl"></i>
+        </a>
+        
+        <!-- Slide Navigation Arrows -->
+        <button class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/50 hover:text-white z-20 text-4xl hidden md:block transition p-2" id="prev-slide">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white/50 hover:text-white z-20 text-4xl hidden md:block transition p-2" id="next-slide">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-heading font-bold text-brand-dark section-header">About United Chemical Industries</h2>
+                <p class="text-gray-500 mt-4 max-w-2xl mx-auto">We are dedicated to supporting the farming ecosystem through scientific innovation and quality products.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div class="flex gap-4 items-start p-6 bg-gray-50 rounded-xl border-l-4 border-brand-green shadow-sm hover:shadow-md transition">
+                        <div class="bg-brand-green/10 p-3 rounded-lg text-brand-green shrink-0">
+                            <i class="fas fa-bullseye text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Our Mission</h3>
+                            <p class="text-gray-600 leading-relaxed">
+                                To lead the market with product excellence by providing cost-effective, innovative, and high-quality agrochemicals and inputs to support the farming community.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4 items-start p-6 bg-gray-50 rounded-xl border-l-4 border-brand-accent shadow-sm hover:shadow-md transition">
+                        <div class="bg-brand-accent/10 p-3 rounded-lg text-brand-accent shrink-0">
+                            <i class="fas fa-leaf text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Our Approach</h3>
+                            <p class="text-gray-600 leading-relaxed">
+                                We offer a complete crop care solution addressing the complex needs of modern agriculture, from pest and disease management to improving plant vigor and final yield.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-4 items-start p-6 bg-gray-50 rounded-xl border-l-4 border-brand-blue shadow-sm hover:shadow-md transition">
+                        <div class="bg-brand-blue/10 p-3 rounded-lg text-brand-blue shrink-0">
+                            <i class="fas fa-chart-line text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Our Vision</h3>
+                            <p class="text-gray-600 leading-relaxed">
+                                To become a global leader in agrochemical innovation, creating sustainable solutions that increase agricultural productivity while protecting our environment.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <div class="absolute -inset-4 bg-brand-light/20 rounded-2xl transform rotate-3 -z-10"></div>
+                    <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=1000&auto=format&fit=crop" alt="Modern Farming" class="rounded-xl shadow-2xl w-full object-cover h-[500px]">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="bg-brand-dark py-12 text-white">
+        <div class="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div class="p-4 animate-fade-in hover:transform hover:scale-105 transition duration-300">
+                <i class="fas fa-bug text-4xl text-brand-light mb-3"></i>
+                <div class="text-3xl font-bold mb-1">8+</div>
+                <div class="text-sm opacity-80">Insecticides</div>
+            </div>
+            <div class="p-4 animate-fade-in hover:transform hover:scale-105 transition duration-300" style="animation-delay: 0.1s;">
+                <i class="fas fa-shield-virus text-4xl text-brand-light mb-3"></i>
+                <div class="text-3xl font-bold mb-1">9+</div>
+                <div class="text-sm opacity-80">Fungicides</div>
+            </div>
+            <div class="p-4 animate-fade-in hover:transform hover:scale-105 transition duration-300" style="animation-delay: 0.2s;">
+                <i class="fas fa-seedling text-4xl text-brand-light mb-3"></i>
+                <div class="text-3xl font-bold mb-1">8+</div>
+                <div class="text-sm opacity-80">Herbicides</div>
+            </div>
+            <div class="p-4 animate-fade-in hover:transform hover:scale-105 transition duration-300" style="animation-delay: 0.3s;">
+                <i class="fas fa-flask text-4xl text-brand-light mb-3"></i>
+                <div class="text-3xl font-bold mb-1">9+</div>
+                <div class="text-sm opacity-80">Growth Promoters</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="py-20 bg-white border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-uci-green font-bold tracking-wide uppercase text-sm mb-2">Leadership</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-uci-slate">Meet Our Team</h3>
+                <div class="w-24 h-1 bg-uci-green mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Member 1 -->
+                <div class="group relative">
+                    <div class="relative overflow-hidden rounded-2xl aspect-[4/5] mb-4 shadow-lg">
+                        <img src="images/1768055226546.jpg" alt="CEO" class="object-cover w-full h-full transform group-hover:scale-105 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-uci-slate/90 via-uci-slate/50 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-6">
+                            <p class="text-white text-sm">Leading UCI with a vision for sustainable agriculture and global market expansion.</p>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h4 class="text-xl font-bold text-uci-slate">Mr. Surinder Nagpal</h4>
+                        <p class="text-uci-green font-medium tracking-wide">Managing Director & CEO</p>
+                    </div>
+                </div>
+
+                <!-- Member 2 -->
+                <div class="group relative">
+                    <div class="relative overflow-hidden rounded-2xl aspect-[4/5] mb-4 shadow-lg">
+                        <img src="images/1768055949474.jpg" alt="Director" class="object-cover w-full h-full transform group-hover:scale-105 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-uci-slate/90 via-uci-slate/50 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-6">
+                            <p class="text-white text-sm">Overseeing operational excellence, supply chain logistics, and strategic partnerships.</p>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h4 class="text-xl font-bold text-uci-slate">Mr. Balwinder Singh</h4>
+                        <p class="text-uci-green font-medium tracking-wide">Area Sales Manager</p>
+                    </div>
+                </div>
+
+                <!-- Member 3 -->
+                <div class="group relative">
+                    <div class="relative overflow-hidden rounded-2xl aspect-[4/5] mb-4 shadow-lg">
+                        <img src="images/17680531379879.png" alt="Technical Director" class="object-cover w-full h-full transform group-hover:scale-105 transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-uci-slate/90 via-uci-slate/50 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-6">
+                            <p class="text-white text-sm">Driving innovation in chemical formulations, safety standards, and product development.</p>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h4 class="text-xl font-bold text-uci-slate">Mr. Vinod Matoria</h4>
+                        <p class="text-uci-green font-medium tracking-wide">Sales Officer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Portfolio -->
+    <section id="products" class="py-20 bg-white">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="text-center mb-12">
+                <span class="text-brand-green font-bold tracking-wider uppercase text-sm">Portfolio</span>
+                <h2 class="text-3xl md:text-4xl font-heading font-bold text-gray-800 mt-2 section-header">Our Products</h2>
+                <p class="text-gray-500 mt-4">High-quality agrochemicals for every farming need</p>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
+                <button class="filter-btn active px-6 py-2 rounded-full border border-brand-green bg-brand-green text-white font-medium transition hover:shadow-lg focus:outline-none" data-filter="all">All Products</button>
+                <button class="filter-btn px-6 py-2 rounded-full border border-brand-green text-brand-green hover:bg-brand-green hover:text-white font-medium transition hover:shadow-lg focus:outline-none" data-filter="insecticides">Insecticides</button>
+                <button class="filter-btn px-6 py-2 rounded-full border border-brand-green text-brand-green hover:bg-brand-green hover:text-white font-medium transition hover:shadow-lg focus:outline-none" data-filter="fungicides">Fungicides</button>
+                <button class="filter-btn px-6 py-2 rounded-full border border-brand-green text-brand-green hover:bg-brand-green hover:text-white font-medium transition hover:shadow-lg focus:outline-none" data-filter="herbicides">Herbicides</button>
+                <button class="filter-btn px-6 py-2 rounded-full border border-brand-green text-brand-green hover:bg-brand-green hover:text-white font-medium transition hover:shadow-lg focus:outline-none" data-filter="pgr">PGR & Biostimulants</button>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="product-grid">
+                
+                <!-- Insecticides -->
+                <div class="product-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group animate-fade-in" data-category="insecticides">
+                    <div class="h-2 bg-red-500"></div>
+                    <div class="product-image-container relative">
+                        <img src="images\truban.png" alt="TRUBAN super" class="product-image w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all duration-300"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-gray-800">TRUBAN super</h3>
+                            <span class="bg-red-100 text-red-700 text-xs px-2 py-1 rounded font-semibold uppercase">Insecticide</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-2 font-medium italic">Chlorpyriphos 50% EC</p>
+                        <p class="text-gray-600 text-sm leading-relaxed">Effective against termites in buildings (construction & existing).</p>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group animate-fade-in" data-category="insecticides">
+                    <div class="h-2 bg-red-500"></div>
+                    <div class="product-image-container relative">
+                        <img src="images\yodha.png" alt="YODHA" class="product-image w-full h-full object-cover">
+                         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all duration-300"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-gray-800">YODHA</h3>
+                            <span class="bg-red-100 text-red-700 text-xs px-2 py-1 rounded font-semibold uppercase">Insecticide</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-2 font-medium italic">Lambda Cyhalothrin 4.9% CS</p>
+                        <p class="text-gray-600 text-sm leading-relaxed">Controls bollworm (Cotton); stem borer, leaf folder (Paddy); fruit borer (Brinjal, Okra); thrips (Chilli).</p>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group animate-fade-in" data-category="insecticides">
+                    <div class="h-2 bg-red-500"></div>
+                    <div class="product-image-container relative">
+                        <img src="images\king.png" alt="KING 505" class="product-image w-full h-full object-cover">
+                         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all duration-300"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-gray-800">KING 505</h3>
+                            <span class="bg-red-100 text-red-700 text-xs px-2 py-1 rounded font-semibold uppercase">Insecticide</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-2 font-medium italic">Chlorpyriphos 50% + Cypermethrin 5% EC</p>
+                        <p class="text-gray-600 text-sm leading-relaxed">Effective against aphid, jassid, thrips, whitefly, bollworm, Spodoptera litura (Cotton).</p>
+                    </div>
+                </div>
+
+                <!-- Fungicides -->
+                <div class="product-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group animate-fade-in" data-category="fungicides">
+                    <div class="h-2 bg-blue-500"></div>
+                    <div class="product-image-container relative">
+                        <img src="images\hexa.png" alt="HEXA SUPER" class="product-image w-full h-full object-cover">
+                         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all duration-300"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-gray-800">HEXA SUPER</h3>
+                            <span class="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded font-semibold uppercase">Fungicide</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-2 font-medium italic">Hexaconazole 5% SC</p>
+                        <p class="text-gray-600 text-sm leading-relaxed">Controls powdery mildew (Mango); sheath blight (Rice).</p>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group animate-fade-in" data-category="fungicides">
+                    <div class="h-2 bg-blue-500"></div>
+                    <div class="product-image-container relative">
+                        <img src="images\super shakti.png" alt="SUPER SHAKTI" class="product-image w-full h-full object-cover">
+                         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all duration-300"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-gray-800">SUPER SHAKTI</h3>
+                            <span class="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded font-semibold uppercase">Fungicide</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-2 font-medium italic">Captan 70% + Hexaconazole 5% WP</p>
+                        <p class="text-gray-600 text-sm leading-relaxed">Controls fruit rot/anthracnose (Chillies); early & late blight (Potato).</p>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group animate-fade-in" data-category="fungicides">
+                    <div class="h-2 bg-blue-500"></div>
+                    <div class="product-image-container relative">
+                        <img src="images\unistar.png" alt="UNISTAR TOP" class="product-image w-full h-full object-cover">
+                         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all duration-300"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-gray-800">UNISTAR TOP</h3>
+                            <span class="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded font-semibold uppercase">Fungicide</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-2 font-medium italic">Azoxystrobin 18.2% + Difenoconazole 11.4% SC</p>
+                        <p class="text-gray-600 text-sm leading-relaxed">Controls anthracnose (Chilli); blight (Tomato/Maize); blast (Paddy); rust (Wheat).</p>
+                    </div>
+                </div>
+
+                <!-- Herbicides -->
+                <div class="product-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group animate-fade-in" data-category="herbicides">
+                    <div class="h-2 bg-green-600"></div>
+                    <div class="product-image-container relative">
+                        <img src="images\parahit.png" alt="PARAHIT" class="product-image w-full h-full object-cover">
+                         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all duration-300"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-gray-800">PARAHIT</h3>
+                            <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded font-semibold uppercase">Herbicide</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-2 font-medium italic">Paraquat Dichloride 24% SL</p>
+                        <p class="text-gray-600 text-sm leading-relaxed">General weed control in Potato, Cotton, Rice, Wheat, Maize.</p>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group animate-fade-in" data-category="herbicides">
+                    <div class="h-2 bg-green-600"></div>
+                    <div class="product-image-container relative">
+                        <img src="images\perfect.png" alt="PERFECT" class="product-image w-full h-full object-cover">
+                         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all duration-300"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-gray-800">PERFECT</h3>
+                            <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded font-semibold uppercase">Herbicide</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-2 font-medium italic">Clodinafop-propargyl 15% WP</p>
+                        <p class="text-gray-600 text-sm leading-relaxed">Controls grass weeds like Phalaris minor in Wheat (Post-emergence).</p>
+                    </div>
+                </div>
+
+                <!-- PGR -->
+                <div class="product-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group animate-fade-in" data-category="pgr">
+                    <div class="h-2 bg-purple-500"></div>
+                    <div class="product-image-container relative">
+                        <img src="images\full power.png" alt="FULL POWER" class="product-image w-full h-full object-cover">
+                         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all duration-300"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-gray-800">FULL POWER</h3>
+                            <span class="bg-purple-100 text-purple-700 text-xs px-2 py-1 rounded font-semibold uppercase">PGR</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-2 font-medium italic">Triacontanol 0.05% GR / 0.1% Min.</p>
+                        <p class="text-gray-600 text-sm leading-relaxed">Increases yield in Cotton, Chillies, Rice, Tomatoes, Groundnut.</p>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group animate-fade-in" data-category="pgr">
+                    <div class="h-2 bg-purple-500"></div>
+                    <div class="product-image-container relative">
+                        <img src="images\growth.png" alt="GROWTH" class="product-image w-full h-full object-cover">
+                         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all duration-300"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-gray-800">GROWTH</h3>
+                            <span class="bg-purple-100 text-purple-700 text-xs px-2 py-1 rounded font-semibold uppercase">PGR</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-2 font-medium italic">Gibberellic Acid 0.001% L</p>
+                        <p class="text-gray-600 text-sm leading-relaxed">Promotes better yields in Paddy, Cotton, Sugarcane, Vegetables.</p>
+                    </div>
+                </div>
+
+                <!-- Additional product for visual balance -->
+                <div class="product-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden group animate-fade-in" data-category="herbicides">
+                    <div class="h-2 bg-green-600"></div>
+                    <div class="product-image-container relative">
+                        <img src="images\ukara.png" alt="U-KYRA" class="product-image w-full h-full object-cover">
+                         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-all duration-300"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-gray-800">U-KYRA</h3>
+                            <span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded font-semibold uppercase">Herbicide</span>
+                        </div>
+                        <p class="text-sm text-gray-500 mb-2 font-medium italic">Pyroxasulfone 55% WG</p>
+                        <p class="text-gray-600 text-sm leading-relaxed">Controls annual grasses & broadleaf weeds in Wheat, Maize, Soybean.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="#contact" class="inline-flex items-center px-6 py-3 bg-brand-green text-white font-semibold rounded-full hover:bg-brand-dark transition shadow-md">
+                    <i class="fas fa-envelope mr-2"></i>Request Full Product Catalog
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact/Footer Section -->
+    <footer id="contact" class="bg-gray-900 text-white">
+        <!-- CTA Bar -->
+        <div class="bg-gradient-to-r from-brand-green to-brand-dark py-10 px-6">
+            <div class="container mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+                <div>
+                    <h3 class="text-2xl font-bold mb-2">Partner with United Chemicals Industries</h3>
+                    <p class="text-white/90">Get high-quality crop solutions today.</p>
+                </div>
+                <div class="mt-6 md:mt-0">
+                    <button class="bg-white text-brand-green px-8 py-3 rounded-full font-bold shadow-md hover:bg-gray-100 transition transform hover:-translate-y-1">
+                        <i class="fas fa-phone-alt mr-2"></i>Call Now: +91 9887147000
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mx-auto px-6 py-16">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <!-- Brand Info -->
+                <div class="col-span-1 lg:col-span-1">
+                    <h4 class="text-xl font-bold mb-6 flex items-center gap-2">
+                        <i class="fas fa-leaf text-brand-light"></i> UNITED Chemicals
+                    </h4>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        Leading the market with product excellence, providing innovative agrochemicals to support the global farming community.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-brand-light transition"><i class="fab fa-facebook-f text-sm"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-brand-light transition"><i class="fab fa-twitter text-sm"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center hover:bg-brand-light transition"><i class="fab fa-linkedin-in text-sm"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-brand-light">Quick Links</h4>
+                    <ul class="space-y-3 text-sm text-gray-400">
+                        <li><a href="#home" class="hover:text-white transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>Home</a></li>
+                        <li><a href="#about" class="hover:text-white transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>About Us</a></li>
+                        <li><a href="#team" class="hover:text-white transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>Our Team</a></li>
+                        <li><a href="#products" class="hover:text-white transition"><i class="fas fa-chevron-right mr-2 text-xs"></i>Products</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-brand-light">Contact Info</h4>
+                    <ul class="space-y-4 text-sm text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mr-3 mt-1 text-brand-light"></i>
+                            <span>123 Agro Park, Industrial Area, Bhatinda, Punjab, 411001</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-brand-light"></i>
+                            <span>+91 9887147000</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-brand-light"></i>
+                            <span>info@unitedchemical.com</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Contact Form -->
+                <div id="contact-form">
+                    <h4 class="text-lg font-bold mb-6 text-brand-light">Get In Touch</h4>
+                    <form class="space-y-3" onsubmit="event.preventDefault(); handleFormSubmit();">
+                        <input type="text" placeholder="Your Name" class="w-full bg-gray-800 border border-gray-700 rounded px-4 py-2 text-sm text-white focus:outline-none focus:border-brand-light">
+                        <input type="email" placeholder="Your Email" class="w-full bg-gray-800 border border-gray-700 rounded px-4 py-2 text-sm text-white focus:outline-none focus:border-brand-light">
+                        <textarea rows="2" placeholder="Message" class="w-full bg-gray-800 border border-gray-700 rounded px-4 py-2 text-sm text-white focus:outline-none focus:border-brand-light"></textarea>
+                        <button class="w-full bg-brand-light hover:bg-brand-green text-white font-bold py-2 rounded text-sm transition">Send Message</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-sm text-gray-500">
+                &copy; 2026 United Chemical Industries. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('animate-fade-in');
+        });
+        
+        // Close menu when clicking a link
+        menu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+
+        // Sticky Navbar effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-white/95', 'backdrop-blur-sm', 'shadow-lg');
+            } else {
+                navbar.classList.remove('bg-white/95', 'backdrop-blur-sm', 'shadow-lg');
+            }
+        });
+
+        // Product Filtering
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const products = document.querySelectorAll('.product-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-brand-green', 'text-white');
+                    b.classList.add('text-brand-green');
+                });
+                // Add active to clicked
+                btn.classList.remove('text-brand-green');
+                btn.classList.add('bg-brand-green', 'text-white');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                products.forEach((product, index) => {
+                    if (filterValue === 'all' || product.getAttribute('data-category') === filterValue) {
+                        product.style.display = 'block';
+                        // Add animation with delay based on index
+                        setTimeout(() => {
+                            product.classList.add('animate-fade-in');
+                            setTimeout(() => product.classList.remove('animate-fade-in'), 500);
+                        }, (index % 3) * 100);
+                    } else {
+                        product.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#' || targetId === '') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    menu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Form submission handler
+        function handleFormSubmit() {
+            const form = document.querySelector('#contact-form form');
+            const inputs = form.querySelectorAll('input, textarea');
+            let isValid = true;
+            
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    isValid = false;
+                    input.classList.add('border-red-500');
+                } else {
+                    input.classList.remove('border-red-500');
+                }
+            });
+            
+            if (isValid) {
+                alert('Thank you for your message! We will contact you soon.');
+                form.reset();
+            } else {
+                alert('Please fill in all required fields.');
+            }
+        }
+
+        // HERO SLIDESHOW FUNCTIONALITY
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.hero-slide');
+        const titles = document.querySelectorAll('.dynamic-title');
+        const indicators = document.querySelectorAll('.slide-indicator');
+        const slideCount = slides.length;
+        let slideInterval;
+
+        // Function to show a specific slide
+        function showSlide(index) {
+            // Hide all slides
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            // Hide all titles
+            titles.forEach(title => {
+                title.classList.remove('active');
+            });
+            
+            // Remove active class from all indicators
+            indicators.forEach(indicator => {
+                indicator.classList.remove('active');
+            });
+            
+            // Show the selected slide
+            slides[index].classList.add('active');
+            titles[index].classList.add('active');
+            indicators[index].classList.add('active');
+            
+            currentSlide = index;
+        }
+
+        // Function to go to next slide
+        function nextSlide() {
+            let nextIndex = (currentSlide + 1) % slideCount;
+            showSlide(nextIndex);
+        }
+
+        // Function to go to previous slide
+        function prevSlide() {
+            let prevIndex = (currentSlide - 1 + slideCount) % slideCount;
+            showSlide(prevIndex);
+        }
+
+        // Set up automatic slideshow
+        function startSlideshow() {
+            slideInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+        }
+
+        // Stop automatic slideshow
+        function stopSlideshow() {
+            clearInterval(slideInterval);
+        }
+
+        // Initialize slideshow
+        function initSlideshow() {
+            // Start the slideshow
+            startSlideshow();
+            
+            // Add click events to indicators
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    stopSlideshow();
+                    showSlide(index);
+                    startSlideshow();
+                });
+            });
+            
+            // Add click events to navigation arrows
+            const prevBtn = document.getElementById('prev-slide');
+            const nextBtn = document.getElementById('next-slide');
+
+            if(prevBtn) {
+                prevBtn.addEventListener('click', () => {
+                    stopSlideshow();
+                    prevSlide();
+                    startSlideshow();
+                });
+            }
+            
+            if(nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    stopSlideshow();
+                    nextSlide();
+                    startSlideshow();
+                });
+            }
+            
+            // Pause slideshow when hovering over hero section
+            const heroSection = document.querySelector('.hero-slideshow');
+            if(heroSection) {
+                heroSection.addEventListener('mouseenter', stopSlideshow);
+                heroSection.addEventListener('mouseleave', startSlideshow);
+            }
+        }
+
+        // Initialize slideshow when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initSlideshow);
+
+        // Initialize animations on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                    observer.unobserve(entry.target); // Only animate once
+                }
+            });
+        }, observerOptions);
+
+        // Observe all team cards and product cards
+        document.querySelectorAll('.team-card, .product-card').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
